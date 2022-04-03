@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
 import Filter from "./Filter"
 
-const url = "https://restcountries.eu/rest/v2/all"
+const url = "https://restcountries.com/v2/all"
 
 const Countries = () => {
   const [countries, setCountries] = useState([])
@@ -14,23 +13,18 @@ const Countries = () => {
     const fetchCountries = async () => {
       const response = await fetch(url)
       const countries = await response.json()
+      console.log(countries)
       setCountries(countries)
       setIsLoading(false)
     }
 
     fetchCountries()
   }, [])
-
-  // const removeCountry = (numericCode) => {
-  //   const newCountry = countries.filter(
-  //     (country) => country.numericCode !== numericCode
-  //   )
-  //   setCountries(newCountry)
-  // }
+ 
 
   return (
     <>
-      <Filter
+       <Filter
         searchInput={searchInput}
         setSearchInput={setSearchInput}
         setFiltered={setFiltered}
@@ -42,11 +36,10 @@ const Countries = () => {
       ) : searchInput.length > 1 ? (
         <section className="countries">
           {filtered.map((country) => {
-            const { numericCode, name, flag, population, region, capital } =
+            const {  name, flag, population, region, capital } =
               country
 
             return (
-              <Link to={`/countries/${name}`} key={numericCode}>
                 <article>
                   <div className="flag">
                     <img src={flag} alt={name} />
@@ -66,18 +59,16 @@ const Countries = () => {
                     </h4>
                   </div>
                 </article>
-              </Link>
             )
           })}
         </section>
       ) : (
         <section className="countries">
           {countries.map((country) => {
-            const { numericCode, name, flag, population, region, capital } =
+            const {  name, flag, population, region, capital } =
               country
 
             return (
-              <Link to={`/countries/${name}`} key={numericCode}>
                 <article>
                   <div className="flag">
                     <img src={flag} alt={name} />
@@ -97,7 +88,6 @@ const Countries = () => {
                     </h4>
                   </div>
                 </article>
-              </Link>
             )
           })}
         </section>
